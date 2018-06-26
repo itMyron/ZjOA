@@ -1,0 +1,60 @@
+.contain{
+    background: #00142A ;
+
+    .title{
+        position: absolute ;
+        height: 60px ;
+        
+        span{
+            margin:7px;
+            float:left ;
+            width:50px ;
+            height: 50px;
+            margin-top: 5px;
+            border-radius: 50%;
+            background: #fff url(../../../assets/top/zj.png) no-repeat center;
+            background-size:contain;
+        }
+        strong{
+            display:inline-block;
+            height: 60px;
+            line-height: 60px ;
+            font-size:22px ;
+            color: #fff ;
+            margin-left: 45px;
+
+        }
+    }
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+      width: 200px;
+      min-height: 400px;
+    }
+
+   
+    .el-menu-vertical-demo{
+        border: none;
+        border-top:1px solid;
+        margin-top: 60px;
+        height: calc(100% - 60px);
+        .fa {
+            vertical-align: middle;
+            margin-right: 5px;
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+
+        }
+
+    }
+
+    .el-submenu .el-menu-item {
+        background-color: #021d3a !important;
+        
+    }
+
+}
+
+    
+    
+ 
+

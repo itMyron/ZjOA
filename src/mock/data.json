@@ -1,0 +1,63 @@
+{
+  "result": "success",
+  "data": {
+    "list": [{
+        "title": "导航1",
+        "bar": "fa-home",
+        "children": [{
+            "item": "列表1",
+            "hash": "a-1"
+          },
+          {
+            "item": "列表2",
+            "hash": "b-1"
+          },
+          {
+            "item": "列表3",
+            "hash": "b-1"
+          }
+        ]
+      },
+      {
+        "title": "导航2",
+        "bar": "el-icon-setting",
+        "children": [{
+            "item": "列表1",
+            "hash": "a-2"
+          },
+          {
+            "item": "列表2",
+            "hash": "b-2"
+          },
+          {
+            "item": "列表3",
+            "hash": "b-2"
+          }
+        ]
+      },
+      {
+        "title": "导航3",
+        "bar": "fa-home",
+        "children": []
+      },
+      {
+        "title": "导航4",
+        "bar": "fa-home",
+        "children": [{
+            "item": "列表1",
+            "hash": "a-4"
+          },
+          {
+            "item": "列表2",
+            "hash": "b-4"
+          },
+          {
+            "item": "列表3",
+            "hash": "b-4"
+          }
+        ]
+      }
+    ]
+  },
+  "msg": "出问题啦"
+}
