@@ -1,4 +1,73 @@
-.content {
-   
-}
+.contain {
+  padding: 15px 10px;
+  header {
+    .inp {
+      width: 300px;
+      margin-right: 10px;
+    }
+  }
+  section{
+    .model{
+      article {
+        .title {
+          font-size: 18px;
+          color: #000;
+          padding: 8px 0;
+        }
+        .v_title {
+          display: inline-block;
+          margin-right: 20px;
+        }
+        .list {
+          align-items: center;
+          padding: 10px 0;
+          .item {
+            display: inline-block;
+            width: 50%;
+            float: left;
+            .bar {
+              display: inline-block;
+              width: 150px;
+              text-align: right;
+              color: #000;
+            }
+            .inp {
+              display: inline-block;
+              height: 28px;
+              width: 40%;
+              color: #000;
+              text-align: left;
+            }
+            .inp /deep/ input {
+              height: 28px;
+            }
+          }
+        }
+      }
 
+      .imgView {
+        .item {
+          text-align: center;
+          p {
+            text-align: center;
+            color: #000;
+            padding: 10px;
+          }
+          img {
+            margin: 0 auto;
+            width: 200px;
+            height: 130px;
+          }
+        }
+      }
+    }
+    .dialog-footer {
+      padding-top: 20px;
+    }
+  }
+    footer {
+      text-align: center;
+      padding: 10px;
+    }
+  
+}

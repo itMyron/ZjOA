@@ -36,7 +36,7 @@
       return {
         uploadDisabled: true ,
         dialogVisible: false ,
-        //dialogImageUrl: ''
+        dialogImageUrl: require(dialogImageUrl)
 
       };
     },
@@ -124,6 +124,11 @@
     },
     created(){
         const self = this ;
+        console.log("flag：",self.flag) ;
+        console.log("dialogImageUrl：",self.dialogImageUrl) ;
+        console.log("fileName：",self.fileName) ;
+        console.log("fileType：",self.fileType) ;
+        console.log("title：",self.title) ;
         if(self.dialogImageUrl){
             self.uploadDisabled = false ;  
         }else{
@@ -211,6 +216,7 @@
     }
     .title{
       width:100% ;
+      height: 30px;
       text-align: center ;
       color: blue ;
     }

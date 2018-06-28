@@ -40,7 +40,7 @@ export default {
   methods: {
     init() {
       	const self = this;
-      	API.postLogin().then( result => {
+      	API.postMenu().then( result => {
         	console.log("菜单列表：",result)
         	self.obj = result.data.list ;
         })

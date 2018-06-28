@@ -1,6 +1,6 @@
 <template>
   	<div id="app">
-		<router-view id="content" />
+		<router-view id="contentBox" />
   </div>
 </template>
 <script>
@@ -46,7 +46,7 @@
 	}
 </script>
 <style>
-#content{  
+#contentBox{  
   height: 100%;  
 }  
 

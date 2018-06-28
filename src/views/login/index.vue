@@ -46,29 +46,12 @@ export default {
     //获取MD5串
     loginMd5: function() {
       let _this = this;
-      _this.$fetch(_this.$API.GET_PWD_STR).then(result => {
-        _this.md5 = result.data;
+      API.postMD5().then(result => {
+        _this.md5 = result.data.data;
       });
     },
     login() {
-        const self = this;
-        let params = {
-		        username: "mkf",
-		        password: 123456
-		    };
-        API.postLogin(params).then( result => {
-        	//console.log(result)
-	        self.$router.push({
-	       		path: "/index"
-	    	});
-        	
-        })
-        
-        
-        
-        /*self.$router.push({
-       		path: "/index"
-    	});
+      const self = this;
       if (self.$fn.isNull(self.userName) || self.$fn.isNull(self.password)) {
         self.$message.error("请填写用户名或密码");
         return;
@@ -78,9 +61,10 @@ export default {
       );
       let params = {
         username: self.$fn.trim(self.userName),
-        password: basePwd
+        password: self.$fn.trim(self.password)
       };
-      self.$post(self.$API.POST_SYS_LOGIN, params).then(result => {
+      API.postLogin(params).then(result => {
+        result = result.data;
         if (result.code == "0") {
           if (!self.$fn.isNull(result.token)) {
             self.token = result.token;
@@ -97,7 +81,7 @@ export default {
             type: "warning"
           });
         }
-      });*/
+      });
     }
   },
   watch: {},
@@ -111,9 +95,12 @@ export default {
     document.onkeydown = function(event) {
       var e = event || window.event || arguments.callee.caller.arguments[0];
       if (e && e.keyCode == 13) {
-        self.login();
+        //self.login();
       }
     };
+  },
+  destroyed() {
+  	document.onkeydown = null ;
   }
 };
 </script>

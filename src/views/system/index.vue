@@ -35,4 +35,4 @@ export default {
 </script>
 <style lang="scss" scoped type="text/css">
 @import "./index.scss";
-</style></style>
+</style>

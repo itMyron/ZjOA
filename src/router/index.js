@@ -6,9 +6,12 @@ import Index from '@/views/index' //主页面
 import Home from '@/views/home/index' //首页
 
 import ProjectProgress from '@/views/projectProgress/index' //项目进度
+import ProjectProgressView from '@/views/projectProgress/view/index' //项目进度
+
 import ProjectDeclareApply from '@/views/projectDeclare/apply/index' //项目申报 --- 项目申请
 import ProjectDeclareFirstTrial from '@/views/projectDeclare/firstTrial/index' //项目申报 --- 项目初审
 import ProjectDeclareSecondTrial from '@/views/projectDeclare/secondTrial/index' //项目申报 --- 项目复审
+
 import RiskAuditingFirstTrial from '@/views/riskAuditing/firstTrial/index' //风控审核 --- 风控初审
 import RiskAuditingSecondTrial from '@/views/riskAuditing/secondTrial/index' //风控审核 --- 风控复审
 import RiskAuditingLegalTrial from '@/views/riskAuditing/legalTrial/index' //风控审核 --- 法务审核
@@ -36,9 +39,12 @@ import AfterLoan from '@/views/afterLoan/index' //贷后管理
 
 import Enterprise from '@/views/enterprise/index' //核心企业
 
-import SupplierList from '@/views/supplier/list/index' //供应商 --- 供应商列表
-import SupplierBusiness from '@/views/supplier/business/index' //供应商 --- 供应商业务审核
-import SupplierRisk from '@/views/supplier/risk/index' //供应商 --- 供应商风控审核
+import SupplierListE from '@/views/supplier/enterprise/list/index' //供应商 --- 企业供应商列表
+import SupplierBusinessE from '@/views/supplier/enterprise/business/index' //供应商 --- 企业供应商业务审核
+import SupplierRiskE from '@/views/supplier/enterprise/risk/index' //供应商 --- 企业供应商风控审核
+import SupplierListP from '@/views/supplier/personal/list/index' //供应商 --- 个人供应商列表
+import SupplierBusinessP from '@/views/supplier/personal/business/index' //供应商 --- 个人供应商业务审核
+import SupplierRiskP from '@/views/supplier/personal/risk/index' //供应商 --- 个人供应商风控审核
 
 import Factoring from '@/views/factoring/index' //保理融资列表
 
@@ -85,6 +91,16 @@ const routes = [
         path: "/projectProgress",
         name: "项目进度",
         component: ProjectProgress,
+        meta: {
+          barF: "项目进度",
+          bar: "",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/projectProgressView",
+        name: "项目进度(查看)",
+        component: ProjectProgressView,
         meta: {
           barF: "项目进度",
           bar: "",
@@ -322,32 +338,62 @@ const routes = [
         }
       },
       {
-        path: "/supplierList",
-        name: "供应商---供应商列表",
-        component: SupplierList,
+        path: "/supplierListE",
+        name: "供应商---企业供应商列表",
+        component: SupplierListE,
         meta: {
           barF: "供应商",
-          bar: "供应商列表",
+          bar: "企业供应商列表",
           barC: "fa-paste"
         }
       },
       {
-        path: "/supplierBusiness",
-        name: "供应商---供应商业务审核",
-        component: SupplierBusiness,
+        path: "/supplierBusinessE",
+        name: "供应商---企业供应商业务审核",
+        component: SupplierBusinessE,
         meta: {
           barF: "供应商",
-          bar: "供应商业务审核",
+          bar: "企业供应商业务审核",
           barC: "fa-paste"
         }
       },
       {
-        path: "/supplierRisk",
-        name: "供应商---供应商风控审核",
-        component: SupplierRisk,
+        path: "/supplierRiskE",
+        name: "供应商---企业供应商风控审核",
+        component: SupplierRiskE,
         meta: {
           barF: "供应商",
-          bar: "供应商风控审核",
+          bar: "企业供应商风控审核",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/supplierListP",
+        name: "供应商---个人供应商列表",
+        component: SupplierListP,
+        meta: {
+          barF: "供应商",
+          bar: "个人供应商列表",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/supplierBusinessP",
+        name: "供应商---个人供应商业务审核",
+        component: SupplierBusinessP,
+        meta: {
+          barF: "供应商",
+          bar: "个人供应商业务审核",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/supplierRiskP",
+        name: "供应商---个人供应商风控审核",
+        component: SupplierRiskP,
+        meta: {
+          barF: "供应商",
+          bar: "个人供应商风控审核",
           barC: "fa-paste"
         }
       },

@@ -1,7 +1,7 @@
 <template>
   	<div id="app">
 		<bmp-menu id="menu" />
-		<div id="contain">
+		<div id="contain" >
 			<bmp-top id="top" />
 			<router-view id="content" />
 		</div>
