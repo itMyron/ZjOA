@@ -25,6 +25,10 @@
             border: 1px solid #666666;
             border-radius: 3px;
             margin: 0 5px;
+            cursor: pointer;
+        }
+        .disable{
+            cursor: no-drop;
         }
     }
 }
