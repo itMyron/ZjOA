@@ -3,7 +3,6 @@
 		<header>
 			<el-input class="inp"  v-model="key" placeholder="请输入项目编号、项目名称、申请人、产品名称"></el-input>
 			<el-button type="primary" plain icon="el-icon-search" size="mini" @click="seek">搜索</el-button>
-			<el-button type="success" plain icon="el-icon-plus" size="mini" @click="handleAdd(true)">新增</el-button>
 		</header>
 		<section>
 			<el-table :data="tableData" stripe style="width: 100%">
@@ -14,7 +13,7 @@
 				<el-table-column prop="applyName" label="申请人" ></el-table-column>
 				<el-table-column prop="productType" label="产品类型" ></el-table-column>
 				<el-table-column prop="audit" label="审核" >
-							<template slot-scope="scope">
+						<template slot-scope="scope">
 						<el-select v-model="status" placeholder="未审核" @change="applyAudit(status,scope.row)">
 					    	<el-option
 					      		v-for="item in options" :key="item.value" :label="item.label" :value="item.value">

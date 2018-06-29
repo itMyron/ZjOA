@@ -2,20 +2,8 @@
 	<div class="contain">
 		<header>
 			<el-input class="inp" v-model="key" placeholder="请输入公司名称或合同编号" size="mini"></el-input>
-			<el-select class="inp" placeholder="请选择">
-				<el-option label="项目申请" value="1"></el-option>
-				<el-option label="项目初审" value="2"></el-option>
-				<el-option label="项目复审" value="3"></el-option>
-				<el-option label="风控初审" value="4"></el-option>
-				<el-option label="风控复审" value="5"></el-option>
-				<el-option label="法务审核" value="6"></el-option>
-				<el-option label="业务副总审核" value="7"></el-option>
-				<el-option label="风控副总审核" value="8"></el-option>
-				<el-option label="项目流转" value="9"></el-option>
-				<el-option label="有权人审核" value="10"></el-option>
-				<el-option label="总经理审核" value="11"></el-option>
-			</el-select>
 			<el-button type="primary" plain icon="el-icon-search" size="mini" @click="querys">搜索</el-button>
+			<el-button type="primary" plain icon="el-icon-plus" size="mini" @click="add">新增</el-button>
 		</header>
 		<section>
 			<el-table :data="tableData" stripe style="width: 100%">
@@ -24,17 +12,18 @@
 						{{scope.$index+1+limitSize*(currentPage-1)}}
 					</template>
 				</el-table-column>
-				<el-table-column prop="projectNo" label="项目编号"></el-table-column>
-				<el-table-column prop="projectName" label="项目名称"></el-table-column>
-				<el-table-column prop="projectApplyTime" label="发起时间"></el-table-column>
-				<el-table-column prop="projectOprator" label="申请人"></el-table-column>
-				<el-table-column prop="projectStatus" label="审核状态"></el-table-column>
-				<el-table-column prop="productType" label="产品类型"></el-table-column>
+				<el-table-column prop="projectNo" label="菜单id"></el-table-column>
+				<el-table-column prop="projectName" label="菜单名称"></el-table-column>
+				<el-table-column prop="projectApplyTime" label="上级菜单"></el-table-column>
+				<el-table-column prop="projectOprator" label="图标"></el-table-column>
+				<el-table-column prop="projectStatus" label="类型"></el-table-column>
+				<el-table-column prop="productType" label="排序号"></el-table-column>
+				<el-table-column prop="productType" label="菜单url"></el-table-column>
+				<el-table-column prop="productType" label="授权标识"></el-table-column>
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
-						<el-button size="mini" type="info" plain @click="handleView(scope.row.id,scope.row.cid)">查看</el-button>
-						<el-button size="mini" type="success" plain @click="audit">留言</el-button>
-						<el-button size="mini" type="primary" plain @click="">附件</el-button>
+						<el-button size="mini" type="info" plain @click="handleView(scope.row.id,scope.row.cid)">修改</el-button>
+						<el-button size="mini" type="danger" plain @click="audit">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -91,7 +80,7 @@
 					key: _this.key
 				}
 				console.log(params)
-				API.postProjectProgress(params).then(result => {
+				/*API.postProjectProgress(params).then(result => {
 					console.log(result)
 					if(null != result && result.data.code == 0 && null != result.data.page.list) {
 						let getData = result.data.page.list;
@@ -135,13 +124,7 @@
 
 						}
 					}
-					/*else {
-						this.$message({
-							message: "错误",
-							type: "warning"
-						});
-					}*/
-				});
+				});*/
 			},
 			handleSizeChange(val) { //改变每页条数
 				this.limit = val;

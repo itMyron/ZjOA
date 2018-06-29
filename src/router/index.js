@@ -5,17 +5,28 @@ import Login from '@/views/login/index' //登录
 import Index from '@/views/index' //主页面
 import Home from '@/views/home/index' //首页
 
+import Enclosure from '@/views/enclosure/index' //附件
+import EnclosureImg from '@/views/components/uploadFile/index' //附件
+
+import Admin from '@/views/system/admin/index' //系统管理---管理员管理
+import Department from '@/views/system/department/index' //系统管理---部门管理
+import Log from '@/views/system/log/index' //系统管理---系统日志
+import Menu from '@/views/system/menu/index' //系统管理---菜单管理
+import Role from '@/views/system/role/index' //系统管理---角色管理
+
 import ProjectProgress from '@/views/projectProgress/index' //项目进度
 import ProjectProgressView from '@/views/projectProgress/view/index' //项目进度
 
+
 import ProjectDeclareApply from '@/views/projectDeclare/apply/index' //项目申报 --- 项目申请
+import ProjectDeclareApplyAdd from '@/views/projectDeclare/apply/add/index' //项目进度---项目申请（添加）
+import ProjectDeclareApplyView from '@/views/projectDeclare/apply/view/index' //项目进度---项目申请（查看）
 import ProjectDeclareFirstTrial from '@/views/projectDeclare/firstTrial/index' //项目申报 --- 项目初审
 import ProjectDeclareSecondTrial from '@/views/projectDeclare/secondTrial/index' //项目申报 --- 项目复审
 
 import RiskAuditingFirstTrial from '@/views/riskAuditing/firstTrial/index' //风控审核 --- 风控初审
 import RiskAuditingSecondTrial from '@/views/riskAuditing/secondTrial/index' //风控审核 --- 风控复审
 import RiskAuditingLegalTrial from '@/views/riskAuditing/legalTrial/index' //风控审核 --- 法务审核
-
 
 import ProjectReviewBusiness from '@/views/projectReview/business/index' //项目评审 --- 业务副总审核
 import ProjectReviewRisk from '@/views/projectReview/risk/index' //项目评审 --- 风控副总审核
@@ -47,7 +58,7 @@ import SupplierBusinessP from '@/views/supplier/personal/business/index' //供�
 import SupplierRiskP from '@/views/supplier/personal/risk/index' //供应商 --- 个人供应商风控审核
 
 import Factoring from '@/views/factoring/index' //保理融资列表
-
+import FactoringLook from '@/views/factoring/view/index' //融资订单查看
 
 Vue.use(Router)
 const routes = [
@@ -88,6 +99,76 @@ const routes = [
         }
       },
       {
+        path: "/enclosure",
+        name: "附件",
+        component: Enclosure,
+        meta: {
+          barF: "",
+          bar: "",
+          barC: ""
+        }
+      },
+      {
+        path: "/enclosureImg",
+        name: "附件",
+        component: EnclosureImg,
+        meta: {
+          barF: "",
+          bar: "",
+          barC: ""
+        }
+      },
+      {
+        path: "/admin",
+        name: "系统管理-管理员管理",
+        component: Admin,
+        meta: {
+          barF: "系统管理",
+          bar: "管理员管理",
+          barC: "el-icon-setting"
+        }
+      },
+      {
+        path: "/department",
+        name: "系统管理-部门管理",
+        component: Department,
+        meta: {
+          barF: "系统管理",
+          bar: "部门管理",
+          barC: "el-icon-setting"
+        }
+      },
+      {
+        path: "/log",
+        name: "系统管理-系统日志",
+        component: Log,
+        meta: {
+          barF: "系统管理",
+          bar: "系统日志",
+          barC: "el-icon-setting"
+        }
+      },
+      {
+        path: "/menu",
+        name: "系统管理-菜单管理",
+        component: Menu,
+        meta: {
+          barF: "系统管理",
+          bar: "菜单管理",
+          barC: "el-icon-setting"
+        }
+      },
+      {
+        path: "/role",
+        name: "系统管理-角色管理",
+        component: Role,
+        meta: {
+          barF: "系统管理",
+          bar: "角色管理",
+          barC: "el-icon-setting"
+        }
+      },
+      {
         path: "/projectProgress",
         name: "项目进度",
         component: ProjectProgress,
@@ -111,6 +192,26 @@ const routes = [
         path: "/projectDeclareApply",
         name: "项目申报---项目申请",
         component: ProjectDeclareApply,
+        meta: {
+          barF: "项目申报",
+          bar: "项目申请",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/projectDeclareApplyAdd",
+        name: "项目申报---项目申请(新增)",
+        component: ProjectDeclareApplyAdd,
+        meta: {
+          barF: "项目申报",
+          bar: "项目申请",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/projectDeclareApplyView",
+        name: "项目申报---项目申请(查看)",
+        component: ProjectDeclareApplyView,
         meta: {
           barF: "项目申报",
           bar: "项目申请",
@@ -403,6 +504,16 @@ const routes = [
         component: Factoring,
         meta: {
           barF: "保理融资列表",
+          bar: "",
+          barC: "fa-paste"
+        }
+      },
+      {
+        path: "/factoringLook",
+        name: "融资订单-查看",
+        component: FactoringLook,
+        meta: {
+          barF: "融资订单-查看	",
           bar: "",
           barC: "fa-paste"
         }

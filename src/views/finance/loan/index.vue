@@ -1,9 +1,8 @@
 <template>
 	<div class="contain">
 		<header>
-			<el-input class="inp"  v-model="key" placeholder="请输入项目编号、项目名称、申请人、产品名称"></el-input>
+			<el-input class="inp"  v-model="key" placeholder="请输入订单编号、债权人、债务人"></el-input>
 			<el-button type="primary" plain icon="el-icon-search" size="mini" @click="seek">搜索</el-button>
-			<el-button type="success" plain icon="el-icon-plus" size="mini" @click="handleAdd(true)">新增</el-button>
 		</header>
 		<section>
 			<el-table :data="tableData" stripe style="width: 100%">
@@ -27,8 +26,8 @@
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
-						<el-button size="mini" type="info" plain @click="check()" >查看</el-button>
-						<el-button size="mini" type="success" plain @click="check()" >附件</el-button>
+						<el-button size="mini" type="info" plain @click="checkFactor(scope.row)" >查看</el-button>
+						<el-button size="mini" type="success" plain @click="check()">附件</el-button>
 					</template>
 				</el-table-column>
   			</el-table>
@@ -52,13 +51,14 @@ let dataInfo = [];
 			return {
 				tableData: dataInfo,
 				totalCount:"0",
+				currentPage:"1",
 				options : [{
 		          	value: '2',
 		          	label: '通过'
 			    },
 			    {
 			     	value: '3',
-			        label: '拒绝'
+			        label: '驳回'
 				}]
 			}
 		},
@@ -117,7 +117,7 @@ let dataInfo = [];
 				if(2 == status){
 					str = "审核通过";
 				}else if (3 == status){
-					str = "审核拒绝";
+					str = "审核驳回";
 				}
 				_this.$confirm('确定'+ str +"吗", '提示', {
 					cancelButtonText: '取消',
@@ -151,6 +151,16 @@ let dataInfo = [];
 			check(){
 				const self = this ;
 				self.$message({message: '附件留言',type: 'success'});
+			},
+			checkFactor(row){
+				let self = this;
+				self.$store.dispatch("nav/changeBack", true);
+				self.$router.push({
+					"path":"/factoringLook",
+					"query":{
+						id:row.id
+					}
+				})
 			}
     	},
 		created(){

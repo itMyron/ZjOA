@@ -1,9 +1,8 @@
 <template>
 	<div class="contain">
 		<header>
-			<el-input class="inp"  v-model="key" placeholder="请输入项目编号、项目名称、申请人、产品名称"></el-input>
+			<el-input class="inp"  v-model="key" placeholder="请输入订单编号、债权人、债务人"></el-input>
 			<el-button type="primary" plain icon="el-icon-search" size="mini" @click="seek">搜索</el-button>
-			<el-button type="success" plain icon="el-icon-plus" size="mini" @click="handleAdd(true)">新增</el-button>
 		</header>
 		<section>
 			<el-table :data="tableData" stripe style="width: 100%">
@@ -18,17 +17,19 @@
 				<el-table-column prop="applyTime" label="申请时间" ></el-table-column>
 				<el-table-column prop="applyStatus" label="审核">
 						<template slot-scope="scope">
-							<el-select v-model="status" placeholder="未审核" @change="applyAudit(status,scope.row)" >
+							<el-select v-model="status" placeholder="未审核" @change="applyAudit(status,scope.row)"  v-if="scope.row.applyStatus!==3">
 						    	<el-option
 						      		v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 						    	</el-option>
 					  		</el-select>
+					  		<span v-if="scope.row.applyStatus===3">拒绝</span>
 						</template>
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
-						<el-button size="mini" type="info" plain @click="check()" >查看</el-button>
+						<el-button size="mini" type="info" plain @click="checkFactor(scope.row)" >查看</el-button>
 						<el-button size="mini" type="success" plain @click="check()" >附件</el-button>
+						<el-button size="mini" type="success" plain @click="check()" >合同</el-button>
 					</template>
 				</el-table-column>
   			</el-table>
@@ -54,6 +55,7 @@ let dataInfo = [
 			return {
 				tableData: dataInfo,
 				totalCount:"0",
+				currentPage:"1",
 				options : [
 				{
 		          	value: '2',
@@ -84,18 +86,10 @@ let dataInfo = [
 			      limit: limitSize,
 			      key: _this.key
 			    };
-				//以下发送请求
 				 API.joinFundList(params).then(result => {
 			       	let data = result.data;
-					console.log( data);
 			       	if (data.code == 0) {
 			       		result = data.page.list; 
-			        	for(var i=0;i<result.length;i++){
-				  			 //设置审核状态
-				  			if(result[i].applyStatus == 3){
-				  				console.log(result[i]);
-				  			}
-					    }
 			       		_this.tableData = result;
 			       		_this.totalCount = data.page.totalCount;
 					  	_this.limitSize = data.page.pageSize;
@@ -158,10 +152,27 @@ let dataInfo = [
 			},
 			//按钮
 			check(){
-				const self = this ;
+				let self = this ;
 				self.$message({message: '附件留言',type: 'success'});
+			},
+			checkFactor(row){
+				let self = this;
+				self.$store.dispatch("nav/changeBack", true);
+				self.$router.push({
+					"path":"/factoringLook",
+					"query":{
+						id:row.id
+					}
+				})
 			}
     	},
+    	mounted () {
+				let self = this;
+				console.log("加载完成");
+				console.log(self.options);
+				console.log(self.tableData);
+				
+			},
 		created(){
 			let _this = this;
 			_this.init();

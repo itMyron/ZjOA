@@ -15,11 +15,19 @@
 				<el-table-column prop="projectTypeName" label="产品类型" ></el-table-column>
         <el-table-column prop="votePlan" label="会议投票进度" ></el-table-column>
 				<el-table-column prop="projectCheckTxt" label="投票结果" ></el-table-column>
+        <el-table-column fixed="right" label="投票" width="110">
+					<template slot-scope="scope">
+						<el-select v-model="status" placeholder="未投票" @change="vote(scope.row,status)" v-if="scope.row.voteStatus==0">
+					    	<el-option
+					      		v-for="item in options" :key="item.value" :label="item.label" :value="item.value" >
+					    	</el-option>
+				  		</el-select>
+              <h5 v-if="scope.row.voteStatus!=0">{{scope.row.voteStatusTxt}}</h5>
+					</template>
+				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
 						<el-button size="mini" type="info" plain @click="handleView">查看</el-button>
-            	<el-button size="mini" type="primary" plain @click="">同意</el-button>
-              	<el-button size="mini" type="primary" plain @click="">拒绝</el-button>
 					   	<el-button size="mini" type="success" plain @click="audit">留言</el-button>
 						<el-button size="mini" type="primary" plain @click="">附件</el-button>
 					</template> 
@@ -46,7 +54,21 @@ import API from "../../../config/api";
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+      options: [
+        {
+          value: "1",
+          label: "通过"
+        },
+        {
+          value: "2",
+          label: "拒绝"
+        },
+        {
+          value: "3",
+          label: "弃权"
+        }
+      ]
     };
   },
   computed: {
@@ -78,18 +100,61 @@ export default {
           } else {
             list[i].projectTypeName = "";
           }
+          if (list[i].voteStatus === 0) {
+            list[i].voteStatusTxt = "待投票";
+          } else if (list[i].voteStatus === 1) {
+            list[i].voteStatusTxt = "已投票：通过";
+          } else if (list[i].voteStatus === 3) {
+            list[i].voteStatusTxt = "已投票：弃权";
+          } else if (list[i].voteStatus === 2) {
+            list[i].voteStatusTxt = "已投票：拒绝";
+          }
           if (list[i].projectCheck === 1) {
             list[i].projectCheckTxt = "进行中";
           } else if (list[i].projectCheck === 2) {
             list[i].projectCheckTxt = "通过";
-          } else if (list[i].projectCheck === 3) {
-            list[i].projectCheckTxt = "驳回";
           } else if (list[i].projectCheck === 4) {
             list[i].projectCheckTxt = "拒绝";
           }
         }
         self.tableData = list;
       });
+    },
+    vote(row, stat) {
+      this.$confirm("是否继续此项操作?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let self = this;
+          let params = {
+            projectId: row.id,
+            status: stat
+          };
+          API.postProjectVote(params).then(result => {
+            result = result.data;
+            if (result.code == "0") {
+              self.list();
+            } else if (result.code == "4001") {
+              //登入过时
+              self.$router.push({
+                path: "/login"
+              });
+            } else {
+              self.$message({
+                message: result.msg,
+                type: "warning"
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消"
+          });
+        });
     },
     seek() {
       this.currentPage = 1;

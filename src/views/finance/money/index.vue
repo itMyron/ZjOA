@@ -1,9 +1,8 @@
 <template>
 	<div class="contain">
 		<header>
-			<el-input class="inp"  v-model="key" placeholder="请输入项目编号、项目名称、申请人、产品名称"></el-input>
+			<el-input class="inp"  v-model="key" placeholder="请输入订单编号、债权人、债务人"></el-input>
 			<el-button type="primary" plain icon="el-icon-search" size="mini" @click="seek">搜索</el-button>
-			<el-button type="success" plain icon="el-icon-plus" size="mini" @click="handleAdd(true)">新增</el-button>
 		</header>
 		<section>
 			<el-table :data="tableData" stripe style="width: 100%">
@@ -14,11 +13,11 @@
 				<el-table-column prop="creditBalance" label="实际授信余额" ></el-table-column>
 				<el-table-column prop="financingMoney" label="融资金额" ></el-table-column>
 				<el-table-column prop="totalRemitMoney" label="实际打款金额" ></el-table-column>
-				<el-table-column prop="applyTime" label="操作时间" ></el-table-column>
+				<el-table-column prop="modifyTime" label="操作时间" width="200"></el-table-column>
 				<el-table-column prop="audit" label="状态" ></el-table-column>
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
-						<el-button size="mini" type="info" plain @click="check()" >查看</el-button>
+						<el-button size="mini" type="info" plain @click="checkFactor(scope.row)" >查看</el-button>
 						<el-button size="mini" type="success" plain @click="check()" >附件</el-button>
 						<el-button size="mini" type="primary" plain @click="uploadProof()" v-if="scope.row.audit==='未打款'">打款凭证上传</el-button>
 					</template>
@@ -71,7 +70,7 @@ let dataInfo = [];
 			        if (data.code == "0") {
 			        	result = data.page.list; 
 			        	for(var i=0;i<result.length;i++){
-				  			 //设置审核状态
+				  			 //设置审核状态和操作时间
 				  			if(result[i].applyStatus == 5){
 				  				result[i].audit = "已打款";
 				  			}else if( result[i].applyStatus == 4){
@@ -109,7 +108,17 @@ let dataInfo = [];
 			//按钮
 			check(){
 				const self = this ;
-				self.$message({message: '附件留言',type: 'success'});
+				self.$message({message: '预留',type: 'success'});
+			},
+			checkFactor(row){
+				let self = this;
+				self.$store.dispatch("nav/changeBack", true);
+				self.$router.push({
+					"path":"/factoringLook",
+					"query":{
+						id:row.id
+					}
+				})
 			}
     	},
 		created(){

@@ -1,0 +1,38 @@
+.contain{
+    header{
+        padding: 10px 0;
+        h3{
+            font-size: 28px; 
+            text-align: center;   
+        }
+    }
+    section{
+        article{
+            padding:0 10px;
+            .bar{
+                font-size: 16px;
+                font-weight: 600;
+                color: #000333;
+                padding: 12px 0;
+            }
+            .box{
+                padding-left: 60px;
+                position: relative;
+                aside{
+                    position: absolute;
+                    left: 10px;
+                    top: 10px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #000333;
+                    width: 30px;
+                } 
+                .uploadFile{
+                    margin: 5px 10px;
+                }   
+            }
+        }
+        
+        
+    }
+}

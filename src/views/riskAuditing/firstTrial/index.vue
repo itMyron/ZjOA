@@ -3,7 +3,6 @@
 		<header>
 			<el-input class="inp"  v-model="key" placeholder="请输入项目编号、项目名称、申请人、产品名称"></el-input>
 			<el-button type="primary" plain icon="el-icon-search" size="mini" @click="seek">搜索</el-button>
-			<el-button type="success" plain icon="el-icon-plus" size="mini" @click="handleAdd(true)">新增</el-button>
 		</header>
 		<section>
 			<el-table :data="tableData" stripe style="width: 100%">

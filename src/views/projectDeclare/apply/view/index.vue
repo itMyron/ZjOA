@@ -1,33 +1,65 @@
 <template>
 	<div class="contain">
 		<header>
-			<h2 class="titile">查看项目立项</h2>
-		</header>
-		<section class="clear">
-			<article class="barTop">
+			<div class="barTop">
 				<p>
 					<font>日期：</font>
-					<span>{{projectInfo.createTime}}</span>
+					<span></span>
 				</p>
 				<p>
 					<font>项目编号：</font>
-					<span>{{projectInfo.projectNo}}</span>
+					<span></span>
 				</p>
+			</div>
+		</header>
+		<section>
+			<article>
+				<div class="switch">
+					<el-switch
+						style="display: block"
+						v-model="flag"
+						active-color="#409EFF"
+						inactive-color="#ff4949"
+						active-text="编辑"
+						inactive-text="">
+					</el-switch>
+				</div>
 			</article>
 			<article>
 				<h3 class="title">产品类型</h3>
 				<div class="list clear">
 					<div class="item">
+						<span class="bar">产品落地区域：</span>
+						<el-select class="inp" v-model="projectInfo.productArea" :disabled="!flag" placeholder="请选择">
+							<el-option label="杭州" value="杭州"></el-option>
+							<el-option label="长兴" value="长兴"></el-option>
+							<el-option label="长春" value="长春"></el-option>
+							<el-option label="上海" value="上海"></el-option>
+							<el-option label="大连" value="大连"></el-option>
+						</el-select>
+					</div>
+					<div class="item">
 						<span class="bar">产品类型：</span>
-						<el-input class="inp len" v-model="projectInfo.productType" :disabled="!flag"></el-input>
+						<el-select class="inp" v-model="projectInfo.productType" :disabled="!flag" placeholder="请选择">
+							<el-option label="应收账款转让" value="1"></el-option>
+							<el-option label="票据" value="2"></el-option>
+						</el-select>
 					</div>
 					<div class="item">
 						<span class="bar">保理业务类型：</span>
-						<el-input class="inp len" v-model="projectInfo.factorType" :disabled="!flag"></el-input>
+						<el-select class="inp len" v-model="projectInfo.factorType" :disabled="!flag" placeholder="请选择">
+							<el-option label="公开型有追索权保理" value="1"></el-option>
+							<el-option label="隐蔽型有追索权保理" value="2"></el-option>
+							<el-option label="公开型无追索权保理" value="3"></el-option>
+							<el-option label="隐蔽型无追索权保理" value="4"></el-option>
+						</el-select>
 					</div>
 					<div class="item">
 						<span class="bar">转让额度类型：</span>
-						<el-input class="inp len" v-model="projectInfo.transferMoneyType"  :disabled="!flag"></el-input>
+						<el-select class="inp" v-model="projectInfo.transferMoneyType" :disabled="!flag" placeholder="请选择">
+							<el-option label="循环额度" value="1"></el-option>
+							<el-option label="非循环额度" value="2"></el-option>
+						</el-select>
 					</div>
 				</div>
 
@@ -37,7 +69,7 @@
 				<div class="list clear">
 					<div class="item item4">
 						<span class="bar">增信措施：</span>
-						<el-input class="inp textarea" v-model="projectInfo.customCreditMethod" :disabled="!flag" type="textarea"></el-input>
+						<el-input class="inp textarea" type="textarea" :disabled="!flag"></el-input>
 					</div>
 				</div>
 			</article>
@@ -105,13 +137,13 @@
 				<div class="list clear">
 					<div class="item item4">
 						<span class="bar">主营业务：</span>
-						<el-input class="inp textarea" v-model="projectInfo.businessScope" :disabled="!flag" type="textarea"></el-input>
+						<el-input class="inp textarea" v-model="projectInfo.businessScope" type="textarea" :disabled="!flag"></el-input>
 					</div>
 				</div>
 				<div class="list clear">
 					<div class="item item4">
 						<span class="bar">股东构成：</span>
-						<el-input class="inp textarea" v-model="projectInfo.corporateArchitecture" :disabled="!flag" type="textarea"></el-input>
+						<el-input class="inp textarea" v-model="projectInfo.corporateArchitecture" type="textarea" :disabled="!flag"></el-input>
 					</div>
 				</div>
 			</article>
@@ -161,21 +193,21 @@
 					</p>
 					<p class="item">
 						<span class="bar">流动比例：</span>
-						<el-input class="inp" v-model="projectInfo.flowRate"  :disabled="!flag"></el-input>
+						<el-input class="inp" v-model="projectInfo.flowRate" :disabled="!flag"></el-input>
 					</p>
 					<p class="item">
 						<span class="bar">经营性现金流：</span>
-						<el-input class="inp" v-model="projectInfo.runCashFlow"  :disabled="!flag"></el-input>
+						<el-input class="inp" v-model="projectInfo.runCashFlow" :disabled="!flag"></el-input>
 					</p>
 					<p class="item">
 						<span class="bar">投资性现金流：</span>
-						<el-input class="inp" v-model="projectInfo.investCashFlow"  :disabled="!flag"></el-input>
+						<el-input class="inp" v-model="projectInfo.investCashFlow" :disabled="!flag"></el-input>
 					</p>
 				</div>
 				<div class="list clear">
 					<p class="item">
 						<span class="bar">统筹性现金流：</span>
-						<el-input class="inp" v-model="projectInfo.planCashflow"  :disabled="!flag"></el-input>
+						<el-input class="inp" v-model="projectInfo.planCashflow" :disabled="!flag"></el-input>
 					</p>
 				</div>
 			</article>
@@ -215,7 +247,10 @@
 				</div>
 			</article>
 			<article>
-				<h3 class="title">应收账款基本信息</h3>
+				<div>
+					<h3 class="title v_title">应收账款基本信息</h3>
+					<el-button size="small" type="primary" v-if="flag" @click="handleEdit(-1)"><i class="fa fa-plus"></i>&nbsp;添加条目</el-button>
+				</div>
 				<div class="list clear">
 					<el-table :data="tableData" style="width: 100%" border=true size="mini" stripe=true highlight-current-row=true>
 						<el-table-column prop="unit" label="应收单位" width="180"></el-table-column>
@@ -224,6 +259,25 @@
 						<el-table-column prop="formingReason" label="形成原因"></el-table-column>
 					</el-table>
 				</div>
+				<el-dialog title="应收账款基本信息" :visible.sync="dialogFormVisible">
+      					<el-form :model="form" label-width="60%">
+        					<el-form-item label="应收单位" :label-width="formLabelWidth">
+          					<el-input v-model="form.unit" auto-complete="off"></el-input></el-form-item>
+        					<el-form-item label="应收账单金额" :label-width="formLabelWidth">
+          						<el-input v-model="form.money" auto-complete="off"></el-input>
+        					</el-form-item>
+        					<el-form-item label="账龄" :label-width="formLabelWidth">
+								<el-input v-model="form.age" auto-complete="off"></el-input>
+        					</el-form-item>
+        					<el-form-item label="原因" :label-width="formLabelWidth">
+								<el-input  v-model="form.formingReason" auto-complete="off" type="textarea"></el-input>
+        					</el-form-item>
+      					</el-form>
+						<div slot="footer" class="dialog-footer">
+							<el-button @click="cancel">取 消</el-button>
+							<el-button type="primary" @click="conform">确 定</el-button>
+						</div>
+    			</el-dialog>
 			</article>
 			<article>
 				<h3 class="title">营业执照</h3>
@@ -234,180 +288,65 @@
 				</div>
 			</article>
 		</section>
-		<footer v-if="flag">
+		<footer>
 			<el-button size="small" @click="cancel">取消</el-button>
 			<el-button size="small" @click="save" type="primary">保存</el-button>
 		</footer>
 	</div>
 </template>
 <script>
-	import uploadImg from "../../components/uploadImg/index";
-	import API from "@/config/api";
+	import uploadImg from "../../../components/uploadImg/index";
+	
 	export default {
-		components: {
-			uploadImg: uploadImg
-		},
-		data() {
+		data(){
 			return {
 				projectInfo: {
-					productType: '',
-					factorType: '',
-					transferMoneyType: '',
-					customCreditMethod: '',
-					projectName: '',
-					projectSource: '',
-					projectHandleDept: '',
-					projectOprator: '',
-					companyName:'',
-					companyNature:'',
-					legalPerson:'',
-					paidCapital:'',
-					registerTime:'',
-					contactTel:'',
-					registerCapital:'',
-					registerAddress:'',
-					businessScope:'',
-					corporateArchitecture:'',
-					totalAssets:'',
-					primaryIncome:'',
-					totalLiability:'',
-					profit:'',
-					netAsset:'',
-					netProfits:'',
-					receivables:'',
-					accountsPayable:'',
-					assetsLiabilitiesRate:'',
-					flowRate:'',
-					runCashFlow:'',
-					investCashFlow:'',
-					planCashflow:'',
-					financeAmount:'',
-					financeUsed:'',
-					financeTel:'',
-					limitMoney:'',
-					rate:'',
-					monthNum:'',
-					createTime:'',
-					projectNo:''
+					operatorStatus: 1
 				},
 				flag: false,
 				dialogImageUrl: "",
+				dialogFormVisible: false,
+				formLabelWidth: '100px',
+				form:{},
 				tableData: [],
-
-			};
+				
+			}
 		},
-		methods: {
-			init() {
-				let _this = this;
-				let params = {
-					id: _this.$route.query.id,
-					cid: _this.$route.query.cid
+		components: {
+			uploadImg: uploadImg
+		},
+		methods :{
+			handleEdit(index, row) {    //编辑按钮
+				this.form = {} ;
+				if(index == -1){//新增条目
+					this.selectIndex = index;
+					this.dialogFormVisible = true
+				}else{//编辑
+					this.form = this.tableData[index];
+					this.currentIndex = index;
+					this.selectIndex = index;
+					this.dialogFormVisible = true
 				}
-				//查看接口
-				console.log(params)
-				API.postCheckProject(params).then(result => {
-					console.log(result)
-					if(null != result && result.status == 200) {
-						if(null != result.data.projectDo) {
-							let getProjectDo = result.data.projectDo;
-							console.log(getProjectDo.projectName)
-							if(getProjectDo.productType == 1) {
-								_this.projectInfo.productType = "应收账款转让";
-							} else if(getProjectDo.productType == 2) {
-								_this.projectInfo.productType = "票据";
-							}
-							if(getProjectDo.factorType == 1) {
-								_this.projectInfo.factorType = "公开型有追索权保理";
-							} else if(getProjectDo.factorType == 2) {
-								_this.projectInfo.factorType = "隐蔽型有追索权保理";
-							} else if(getProjectDo.factorType == 3) {
-								_this.projectInfo.factorType = "公开型无追索权保理";
-							} else if(getProjectDo.factorType == 4) {
-								_this.projectInfo.factorType = "隐蔽型无追索权保理";
-							}
-							if(getProjectDo.transferMoneyType == 1) {
-								_this.projectInfo.transferMoneyType = "循环额度";
-							} else if(getProjectDo.transferMoneyType == 2) {
-								_this.projectInfo.transferMoneyType = "非循环额度";
-							}
-							_this.projectInfo.customCreditMethod = getProjectDo.customCreditMethod; //增信措施
-							_this.projectInfo.projectName = getProjectDo.projectName; //项目名称
-							_this.projectInfo.projectSource = getProjectDo.projectSource; //项目来源
-							_this.projectInfo.projectHandleDept = getProjectDo.projectHandleDept; //经办部门
-							_this.projectInfo.projectOprator = getProjectDo.projectOprator; //经办人员projectNo
-							_this.projectInfo.projectNo = getProjectDo.projectNo;//项目编号
-							_this.projectInfo.createTime = getProjectDo.createTime;//项目创建时间
-						}
-						//核心企业信息
-						if(null != result.data.compareDo) {
-							let getCompareDo = result.data.compareDo;
-							_this.projectInfo.companyName = getCompareDo.companyName; //企业名称
-							_this.projectInfo.companyNature = getCompareDo.companyNature; //企业性质
-							_this.projectInfo.legalPerson = getCompareDo.legalPerson; //法人代表
-							_this.projectInfo.paidCapital = getCompareDo.paidCapital; //实缴资金
-							_this.projectInfo.registerTime = getCompareDo.registerTime; //成立时间
-							_this.projectInfo.contactTel = getCompareDo.contact_tel; //联系方式
-							_this.projectInfo.registerCapital = getCompareDo.registerCapital; //注册资金
-							_this.projectInfo.registerAddress = getCompareDo.registerAddress; //注册地址
-							_this.projectInfo.businessScope = getCompareDo.businessScope; //主营业务
-							_this.projectInfo.corporateArchitecture = getCompareDo.corporateArchitecture; //股东构成
-							_this.projectInfo.totalAssets = getCompareDo.totalAssets; //总资产
-							_this.projectInfo.primaryIncome = getCompareDo.primaryIncome; //主营收入
-							_this.projectInfo.totalLiability = getCompareDo.totalLiability; //总负债
-							_this.projectInfo.profit = getCompareDo.profit; //营业利润
-							_this.projectInfo.netAsset = getCompareDo.netAsset; //净资产
-							_this.projectInfo.netProfits = getCompareDo.netProfits; //净利润
-							_this.projectInfo.receivables = getCompareDo.receivables; //应收账款
-							_this.projectInfo.accountsPayable = getCompareDo.accountsPayable; //应付账款
-							_this.projectInfo.assetsLiabilitiesRate = getCompareDo.assetsLiabilitiesRate; //资产负债率
-							_this.projectInfo.flowRate = getCompareDo.flowRate; //流动比率
-							_this.projectInfo.runCashFlow = getCompareDo.runCashFlow; //经营性现金流
-							_this.projectInfo.investCashFlow = getCompareDo.investCashFlow; //投资性现金流
-							_this.projectInfo.planCashflow = getCompareDo.planCashflow; //统筹性现金流
-
-						}
-						//融资信息
-						if(null != result.data.financeDo) {
-							let getFinance = result.data.financeDo;
-							_this.projectInfo.financeAmount = getFinance.financeAmount; //融资金额
-							_this.projectInfo.financeUsed = getFinance.financeUsed; //融资用途
-							_this.projectInfo.financeTel = getFinance.financeTel; //融资联系方式
-						}
-						//建议额度信息
-						if(null != result.data.limitDo) {
-							let getLimit = result.data.limitDo;
-							_this.projectInfo.limitMoney = getLimit.limitMoney; //建议额度
-							_this.projectInfo.rate = getLimit.rate; //年化利率
-							_this.projectInfo.monthNum = getLimit.monthNum; //期限
-						}
-						//应收账款信息
-						if(result.data.receiveDo){
-							_this.tableData = result.data.receiveDo;
-						}
-						//附件信息
-						if(null!=result.data.accessoryDo){
-							_this.projectInfo.dialogImageUrl = result.data.accessoryDo.fileName;
-						}
-					}
-
-				});
-
+				
+				
 			},
-
-			getUrl(data) {
-				this.dialogImageUrl.map(item => {
-					if(item.fileType == data.fileType) {
-						item.fileName = data.fileName;
-					}
-				});
+			handleDelete(index, row) {  //删除按钮
+				
 			},
-
+			cancel() {      //取消按钮
+				this.dialogFormVisible = false
+			},
+			conform() {      //确定按钮
+				this.dialogFormVisible = false
+			},
 		},
-		created() {
-			this.init();
+		created(){
+			
 		}
-	};
+	}
+
 </script>
 <style lang="scss" scoped type="text/css">
-	@import "./index.scss";
+   @import "./index.scss";
 </style>
+

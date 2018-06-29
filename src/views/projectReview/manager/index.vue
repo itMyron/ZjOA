@@ -13,11 +13,18 @@
 				<el-table-column prop="applyTime" label="申请时间" ></el-table-column>
 				<el-table-column prop="applyName" label="申请人" ></el-table-column>
 				<el-table-column prop="projectTypeName" label="产品类型" ></el-table-column>
+        <el-table-column fixed="right" label="审核" width="110">
+					<template slot-scope="scope">
+						<el-select v-model="status" placeholder="未审核" @change="audit(scope.row,status)">
+					    	<el-option
+					      		v-for="item in options" :key="item.value" :label="item.label" :value="item.value" >
+					    	</el-option>
+				  		</el-select>
+					</template>
+				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
 						<el-button size="mini" type="info" plain @click="handleView">查看</el-button>
-            	<el-button size="mini" type="primary" plain @click="">同意</el-button>
-              	<el-button size="mini" type="primary" plain @click="">拒绝</el-button>
 					   	<el-button size="mini" type="success" plain @click="audit">留言</el-button>
 						<el-button size="mini" type="primary" plain @click="">附件</el-button>
 					</template> 
@@ -44,7 +51,21 @@ import API from "../../../config/api";
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+      options: [
+        {
+          value: "1",
+          label: "通过"
+        },
+        {
+          value: "2",
+          label: "拒绝"
+        },
+        {
+          value: "3",
+          label: "驳回"
+        }
+      ]
     };
   },
   computed: {
@@ -80,6 +101,49 @@ export default {
         }
         self.tableData = list;
       });
+    },
+    audit(row, stat) {
+      //选择会议形式
+      if (stat == 1) {
+        
+      }
+      if (stat != 1) {
+        this.$confirm("是否继续此项操作?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            let self = this;
+            let params = {
+              projectId: row.id,
+              status: stat,
+              meetingWay: ""
+            };
+            API.postProjectAudit(params).then(result => {
+              result = result.data;
+              if (result.code == "0") {
+                self.list();
+              } else if (result.code == "4001") {
+                //登入过时
+                self.$router.push({
+                  path: "/login"
+                });
+              } else {
+                self.$message({
+                  message: result.msg,
+                  type: "warning"
+                });
+              }
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消"
+            });
+          });
+      }
     },
     seek() {
       this.currentPage = 1;

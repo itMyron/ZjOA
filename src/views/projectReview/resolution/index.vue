@@ -18,9 +18,8 @@
 				<el-table-column fixed="right" label="操作" width="310">
 					<template slot-scope="scope">
 						<el-button size="mini" type="info" plain @click="handleView">查看</el-button>
-            	<el-button size="mini" type="primary" plain @click="">同意</el-button>
-              	<el-button size="mini" type="primary" plain @click="">拒绝</el-button>
 					   	<el-button size="mini" type="success" plain @click="audit">留言</el-button>
+                  	<el-button size="mini" type="primary" plain @click="anewVote(scope.row)" v-if="scope.row.projectCheck==4">重投</el-button>
 						<el-button size="mini" type="primary" plain @click="">附件</el-button>
 					</template> 
 				</el-table-column>
@@ -96,6 +95,38 @@ export default {
         }
         self.tableData = list;
       });
+    },
+    anewVote(row) {
+      this.$confirm("是否继续此项操作?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let params = { projectId: 104 };
+          API.postProjectVoteAgain(params).then(result => {
+            result = result.data;
+            if (result.code == "0") {
+              this.list();
+            } else if (result.code == "4001") {
+              //登入过时
+              self.$router.push({
+                path: "/login"
+              });
+            } else {
+              self.$message({
+                message: result.msg,
+                type: "warning"
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消"
+          });
+        });
     },
     seek() {
       this.currentPage = 1;
